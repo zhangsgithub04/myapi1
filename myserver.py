@@ -110,7 +110,8 @@ async def create_president(president: PresidentCreate):
 
     if not response.data:
         raise HTTPException(status_code=400, detail="Failed to create president")
-
+        logger.exception(f"President creation failed:")
+    logger.info(f"President created: {response.data[0]}")
     return response.data[0]
 
 
