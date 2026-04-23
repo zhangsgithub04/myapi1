@@ -91,7 +91,7 @@ async def get_president(president_id: int):
         .execute()
     )
 
-     except Exception as e:
+    except Exception as e:
         logger.exception("Database error")
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
