@@ -8,7 +8,7 @@ def test_get_president_success():
     mock_response = MagicMock()
     mock_response.data = [{"id": 1, "name": "George Washington"}]
 
-    with patch("main.supabase") as mock_supabase:
+    with patch("myserver.supabase") as mock_supabase:
         mock_supabase.table.return_value.select.return_value.eq.return_value.execute.return_value = mock_response
 
         response = client.get("/presidents/1")
@@ -25,7 +25,7 @@ def test_get_president_not_found():
     mock_response = MagicMock()
     mock_response.data = []
 
-    with patch("main.supabase") as mock_supabase:
+    with patch("myserver.supabase") as mock_supabase:
         mock_supabase.table.return_value.select.return_value.eq.return_value.execute.return_value = mock_response
 
         response = client.get("/presidents/999")
@@ -34,7 +34,7 @@ def test_get_president_not_found():
         assert response.json()["detail"] == "President not found"
 
 def test_get_president_db_error():
-    with patch("main.supabase") as mock_supabase:
+    with patch("myserver.supabase") as mock_supabase:
         mock_supabase.table.return_value.select.return_value.eq.return_value.execute.side_effect = Exception("DB failure")
 
         response = client.get("/presidents/1")
